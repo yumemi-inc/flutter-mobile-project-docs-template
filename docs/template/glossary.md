@@ -96,16 +96,3 @@
 | 未読 |  Unread          |   |
 | すべて既読にする |  Mark all as read       |   |
 | 詳細を見る |  View details           |   |
-
-### ユーザー管理(UserManagement)
-
-#### ユーザー一覧画面(UserListPage)
-
-| 日本語   | 英語  | 備考 |
-|--------|------------------|------|
-| ユーザー名 |  Username           |   |
-| メールアドレス |  Email Address  |   |
-| 権限 |  Role           |   |
-| ステータス |  Status           |   |
-| 編集 |  Edit        |   |
-| 削除 |  Delete           |   |
