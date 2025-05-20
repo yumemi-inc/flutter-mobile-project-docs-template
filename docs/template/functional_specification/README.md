@@ -12,7 +12,7 @@
 `Anthropic`社が公開している[Use XML tags to structure your prompts](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags) に準拠し、生成AIの活用を前提として執筆する。
 
 > [!NOTE]
-> Cursorでの執筆を前提とするが、ChatGPTやGeminiなどのチャットツールでも本ドキュメントの内容を活用すれば実施可能だと思われる。
+> `Cursor`での執筆を前提とするが、別の生成AIツールでも同様の方法でドキュメントを作成できると思われる。
 
 ### 1. ファイルを作成する
 
@@ -97,7 +97,7 @@
 機能仕様書で書きたい内容について、箇条書きで作成する。
 
 > [!IMPORTANT]
-> `Markdown記法の箇条書きリストを使い、ネストを意識した書き方をすること。
+> Markdown記法の箇条書きリストを使い、ネストを意識した書き方をすること。
 
 #### 例
 
@@ -146,7 +146,7 @@
 (生成後の成果物に`<content>`が残ることが多いため、は残る場合は手動で削除する)
 
 > [!TIP]
-> 選択するmodelは`Auto`で問題ない
+> 選択する`model`は`Auto`もしくは`Claude`にすること
 
 #### 例
 
