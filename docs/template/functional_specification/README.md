@@ -149,3 +149,5 @@
 > 選択するmodelは`Auto`で問題ない
 
 #### 例
+
+![図1](https://github.com/user-attachments/assets/a893f90a-64de-48ea-a626-da982ad66622)
