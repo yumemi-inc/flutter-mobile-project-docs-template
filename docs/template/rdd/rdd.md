@@ -119,7 +119,7 @@
 [ログイン]: login.md
 [ログアウト]: logout.md
 [Push通知]: push_notification.md
-[メンテナンスモード]: docs/hoge.md
+[メンテナンスモード]: maintenance.md
 [強制バージョンアップ]: force_update.md
 
 <!-- 非機能要件 -->
