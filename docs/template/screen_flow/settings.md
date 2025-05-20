@@ -9,114 +9,62 @@
 -->
 
 このドキュメントでは、アプリケーションの設定機能に関連する画面遷移を定義します。
-ユーザー設定画面から各種設定項目画面への遷移と、設定変更の流れを記載しています。
+設定画面からFAQ、利用規約、プライバシーポリシー、ライセンス情報などの画面への遷移と、設定変更の流れを記載しています。
 
 ## 設定機能フロー詳細
 
 ### メイン設定フロー
 
 ```mermaid
-flowchart TD
-    Home[ホーム画面] -- "設定ボタン" --> Settings[設定画面]
-    Settings -- "プロフィール" --> Profile[プロフィール設定]
-    Settings -- "通知設定" --> NotifSettings[通知設定]
-    Settings -- "アカウント" --> Account[アカウント設定]
-    Settings -- "セキュリティ" --> Security[セキュリティ設定]
-    Settings -- "外観" --> Appearance[外観設定]
-    Settings -- "言語" --> Language[言語設定]
-    Settings -- "ヘルプ" --> Help[ヘルプ・サポート]
-    Settings -- "利用規約" --> Terms[利用規約]
-    Settings -- "プライバシーポリシー" --> Privacy[プライバシーポリシー]
+graph TD
+    SC002(ホーム画面) -- "設定ボタン" --> SC003(設定画面)
+    SC003 -- "FAQ" --> SC004(FAQ画面)
+    SC003 -- "利用規約" --> SC005(利用規約画面)
+    SC003 -- "プライバシーポリシー" --> SC006(プライバシーポリシー画面)
+    SC003 -- "ライセンス" --> SC007(ライセンス一覧画面)
+    SC003 -- "メンテナンス" --> SC009(メンテナンス画面)
     
-    Profile -- "戻る" --> Settings
-    NotifSettings -- "戻る" --> Settings
-    Account -- "戻る" --> Settings
-    Security -- "戻る" --> Settings
-    Appearance -- "戻る" --> Settings
-    Language -- "戻る" --> Settings
-    Help -- "戻る" --> Settings
-    Terms -- "戻る" --> Settings
-    Privacy -- "戻る" --> Settings
+    SC004 -- "戻る" --> SC003
+    SC005 -- "戻る" --> SC003
+    SC006 -- "戻る" --> SC003
+    SC007 -- "戻る" --> SC003
+    SC007 -- "詳細" --> SC008(ライセンス詳細画面)
+    SC008 -- "戻る" --> SC007
+    SC009 -- "戻る" --> SC003
     
-    Settings -- "戻る" --> Home
-    
-    Settings -- "ログアウト" --> LogoutConfirm[ログアウト確認]
-    LogoutConfirm -- "はい" --> Login[ログイン画面]
-    LogoutConfirm -- "いいえ" --> Settings
+    SC003 -- "戻る" --> SC002
 ```
 
-### プロフィール設定フロー
+### ライセンス情報フロー
 
 ```mermaid
-flowchart TD
-    Profile[プロフィール設定] --> EditProfile[プロフィール編集]
-    Profile --> ChangeAvatar[アバター変更]
+graph TD
+    SC007(ライセンス一覧画面) --> FilterOptions[表示オプション]
+    FilterOptions -- "すべて表示" --> ShowAll[すべてのライセンス]
+    FilterOptions -- "カテゴリ別" --> CategoryFilter[カテゴリフィルター]
     
-    EditProfile -- "保存" --> SaveConfirm[変更確認ダイアログ]
-    SaveConfirm -- "はい" --> SaveProcess[保存処理]
-    SaveProcess --> Profile
-    SaveConfirm -- "いいえ" --> EditProfile
-    EditProfile -- "キャンセル" --> Profile
-    
-    ChangeAvatar -- "カメラ" --> Camera[カメラ起動]
-    ChangeAvatar -- "ギャラリー" --> Gallery[ギャラリー起動]
-    ChangeAvatar -- "キャンセル" --> Profile
-    
-    Camera -- "写真撮影" --> AvatarPreview[アバタープレビュー]
-    Gallery -- "写真選択" --> AvatarPreview
-    AvatarPreview -- "確定" --> SaveAvatar[アバター保存]
-    SaveAvatar --> Profile
-    AvatarPreview -- "キャンセル" --> ChangeAvatar
+    SC007 -- "ライセンス選択" --> SC008(ライセンス詳細画面)
+    SC008 -- "外部リンク" --> ExternalBrowser[外部ブラウザ]
+    ExternalBrowser -- "戻る" --> SC008
+    SC008 -- "戻る" --> SC007
 ```
 
-### セキュリティ設定フロー
+### エラー処理フロー
 
 ```mermaid
-flowchart TD
-    Security[セキュリティ設定] --> ChangePassword[パスワード変更]
-    Security --> TwoFactor[二要素認証設定]
-    Security --> SessionManagement[セッション管理]
+graph TD
+    SC003(設定画面) -- "読み込みエラー" --> LoadError[読み込みエラーダイアログ]
+    LoadError -- "再試行" --> SC003
+    LoadError -- "キャンセル" --> SC002(ホーム画面)
     
-    ChangePassword -- "変更実行" --> PasswordConfirm[変更確認]
-    PasswordConfirm -- "確認" --> PasswordChanged[変更完了]
-    PasswordChanged --> Security
-    PasswordConfirm -- "キャンセル" --> ChangePassword
-    ChangePassword -- "戻る" --> Security
-    
-    TwoFactor -- "有効化" --> TwoFactorSetup[設定手順]
-    TwoFactorSetup -- "完了" --> TwoFactorConfirm[設定確認]
-    TwoFactorConfirm --> Security
-    TwoFactor -- "無効化" --> TwoFactorDisable[無効化確認]
-    TwoFactorDisable --> Security
-    TwoFactor -- "戻る" --> Security
-    
-    SessionManagement -- "セッション終了" --> SessionConfirm[終了確認]
-    SessionConfirm -- "はい" --> SessionTerminated[終了完了]
-    SessionConfirm -- "いいえ" --> SessionManagement
-    SessionTerminated --> Security
-    SessionManagement -- "戻る" --> Security
-```
-
-### 通知設定フロー
-
-```mermaid
-flowchart TD
-    NotifSettings[通知設定] --> GeneralNotif[全体通知]
-    NotifSettings --> PushNotif[プッシュ通知]
-    NotifSettings --> EmailNotif[メール通知]
-    
-    GeneralNotif -- "設定保存" --> NotifSettings
-    PushNotif -- "設定保存" --> NotifSettings
-    EmailNotif -- "設定保存" --> NotifSettings
-    
-    GeneralNotif -- "戻る" --> NotifSettings
-    PushNotif -- "戻る" --> NotifSettings
-    EmailNotif -- "戻る" --> NotifSettings
+    SC003 -- "通信エラー" --> ConnError[通信エラーダイアログ]
+    ConnError -- "再試行" --> SC003
+    ConnError -- "キャンセル" --> SC002
 ```
 
 ## 備考
 
-- ログアウト操作は確認ダイアログで二度確認します
-- セッション管理では現在のセッション以外のログインセッションを管理できます
-- 一部の設定変更（言語、テーマなど）はアプリの再起動後に反映されます
-- 設定項目はアプリのバージョンによって異なる場合があります
+- 設定項目は利用環境やユーザー権限によって表示/非表示が切り替わります
+- 各設定画面からの「戻る」操作は、直前の画面に戻ります
+- ライセンス情報は外部ライブラリごとにカテゴリ分けされています
+- 外部ブラウザで開くリンクは、アプリ内ブラウザではなくOSのデフォルトブラウザを使用します

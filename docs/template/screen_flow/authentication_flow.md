@@ -9,69 +9,48 @@
 -->
 
 このドキュメントでは、アプリケーションの認証機能に関連する画面遷移を定義します。
-ログイン、登録、パスワードリセットなどの認証関連機能を網羅し、ユーザー認証状態による条件分岐も記載しています。
+ログイン、メンテナンス画面などの認証関連機能を網羅し、ユーザー認証状態による条件分岐も記載しています。
 
 ## 認証フロー詳細
 
 ### 初期認証フロー
 
 ```mermaid
-flowchart TD
-    Start([アプリ起動]) --> Splash[スプラッシュ画面]
-    Splash --> TokenCheck{トークン有効?}
-    TokenCheck -- "Yes" --> Home[ホーム画面]
-    TokenCheck -- "No" --> Login[ログイン画面]
-    Login -- "ログイン成功" --> Home
-    Login -- "アカウント登録" --> Registration[アカウント登録画面]
-    Registration -- "登録成功" --> Login
-    Registration -- "キャンセル" --> Login
-    Login -- "パスワードを忘れた" --> PasswordReset[パスワードリセット画面]
-    PasswordReset -- "リセット完了" --> Login
-    PasswordReset -- "キャンセル" --> Login
+graph TD
+    A([アプリ起動]) --> SC001(ログイン画面)
+    SC001 -- "ログイン成功" --> SC002(ホーム画面)
+    SC001 -- "メンテナンス中" --> SC009(メンテナンス画面)
+    SC009 -- "戻る" --> SC001
 ```
 
-### パスワードリセットフロー
+### メンテナンス画面フロー
 
 ```mermaid
-flowchart TD
-    Login[ログイン画面] -- "パスワードを忘れた" --> PasswordReset[パスワードリセット画面]
-    PasswordReset -- "メールアドレス入力" --> SendResetEmail[リセットメール送信]
-    SendResetEmail -- "送信成功" --> ResetEmailSent[送信完了画面]
-    SendResetEmail -- "エラー" --> ResetError[エラー画面]
-    ResetEmailSent -- "ログイン画面に戻る" --> Login
+graph TD
+    SC001(ログイン画面) -- "メンテナンス中" --> SC009(メンテナンス画面)
+    SC009 -- "再試行" --> MCheck{メンテナンス確認}
+    MCheck -- "終了" --> SC001
+    MCheck -- "継続中" --> SC009
     
-    %% メール経由のパスワードリセット
-    ResetLink([リセットリンク]) --> PasswordResetForm[新パスワード入力画面]
-    PasswordResetForm -- "パスワード更新" --> ResetSuccess[リセット成功画面]
-    ResetSuccess -- "ログイン" --> Login
+    SC002(ホーム画面) -- "メンテナンス時間" --> SC009
+    SC003(設定画面) -- "メンテナンス時間" --> SC009
 ```
 
-### 多要素認証フロー
+### エラーハンドリング
 
 ```mermaid
-flowchart TD
-    Login[ログイン画面] -- "ログイン情報入力" --> MFACheck{多要素認証有効?}
-    MFACheck -- "Yes" --> MFAInput[認証コード入力画面]
-    MFACheck -- "No" --> Home[ホーム画面]
-    MFAInput -- "コード検証成功" --> Home
-    MFAInput -- "コード検証失敗" --> MFAError[エラー画面]
-    MFAError -- "再試行" --> MFAInput
-    MFAError -- "キャンセル" --> Login
-```
-
-### ログアウトフロー
-
-```mermaid
-flowchart TD
-    Settings[設定画面] -- "ログアウト選択" --> LogoutConfirm[ログアウト確認]
-    LogoutConfirm -- "キャンセル" --> Settings
-    LogoutConfirm -- "ログアウト実行" --> LogoutProcess[ログアウト処理]
-    LogoutProcess --> Login[ログイン画面]
+graph TD
+    SC001(ログイン画面) -- "認証エラー" --> AuthError[認証エラーダイアログ]
+    AuthError -- "再試行" --> SC001
+    
+    SC001 -- "通信エラー" --> ConnError[通信エラーダイアログ]
+    ConnError -- "再試行" --> SC001
+    ConnError -- "キャンセル" --> SC001
 ```
 
 ## 備考
 
-- セッションタイムアウト（30分）後は自動的にログアウトし、ログイン画面に遷移します
-- 認証エラー時は共通のエラーダイアログで表示し、再試行または中断を選択できます
-- ネットワーク接続がない場合は、オフライン警告を表示し、再接続後に自動リトライします
-- パスワードリセットリンクの有効期限は24時間です
+- ログイン試行は連続5回失敗するとアカウントがロックされます
+- メンテナンス画面では予定終了時刻を表示します
+- アプリ起動時、バックエンドAPIの状態によって適切な画面を表示します
+- 認証エラーはエラーコードごとに適切なメッセージを表示します

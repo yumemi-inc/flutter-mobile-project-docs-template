@@ -9,103 +9,52 @@
 -->
 
 このドキュメントでは、アプリケーションのホーム画面からの主要な機能への画面遷移を定義します。
-ユーザーの主な利用シナリオに沿った画面遷移を記載し、ホーム画面を中心とした機能の流れを示しています。
+ホーム画面からの設定画面への遷移など、ユーザーの主な利用シナリオに沿った画面遷移を記載しています。
 
 ## ホーム機能フロー詳細
 
 ### メインフロー
 
 ```mermaid
-flowchart TD
-    Home[ホーム画面] --> Detail1[詳細画面A]
-    Home --> Detail2[詳細画面B]
-    Home --> Detail3[詳細画面C]
-    Home --> Search[検索画面]
+graph TD
+    SC002(ホーム画面) -- "設定ボタン" --> SC003(設定画面)
+    SC003 -- "戻る" --> SC002
     
-    Detail1 -- "戻るボタン" --> Home
-    Detail2 -- "戻るボタン" --> Home
-    Detail3 -- "戻るボタン" --> Home
-    Search -- "戻るボタン" --> Home
-    
-    Detail1 -- "関連情報" --> Detail2
-    Detail2 -- "詳細情報" --> Detail3
-    Search -- "検索結果選択" --> Detail1
-    Search -- "検索結果選択" --> Detail2
-    Search -- "検索結果選択" --> Detail3
-    
-    Home -- "通知アイコン" --> Notification[通知画面]
-    Home -- "設定ボタン" --> Settings[設定画面]
-    
-    Notification -- "戻るボタン" --> Home
-    Settings -- "戻るボタン" --> Home
+    SC001(ログイン画面) -- "ログイン成功" --> SC002
+    SC002 -- "メンテナンス中" --> SC009(メンテナンス画面)
 ```
 
-### 詳細画面フロー
+### 複数画面からのホーム画面への遷移
 
 ```mermaid
-flowchart TD
-    Detail1[詳細画面A] --> DetailInfo1[情報表示A]
-    Detail1 --> Edit1[編集画面A]
-    Detail1 --> Share1[共有ダイアログ]
+graph TD
+    SC004(FAQ画面) --> BackOption{戻る操作}
+    SC005(利用規約画面) --> BackOption
+    SC006(プライバシーポリシー画面) --> BackOption
     
-    DetailInfo1 -- "戻る" --> Detail1
-    Edit1 -- "保存/キャンセル" --> Detail1
-    Share1 -- "完了/キャンセル" --> Detail1
+    BackOption -- "直前が設定画面" --> SC003(設定画面)
+    BackOption -- "直前がホーム画面" --> SC002(ホーム画面)
     
-    Detail2[詳細画面B] --> DetailInfo2[情報表示B]
-    Detail2 --> Edit2[編集画面B]
-    Detail2 --> Share2[共有ダイアログ]
-    
-    DetailInfo2 -- "戻る" --> Detail2
-    Edit2 -- "保存/キャンセル" --> Detail2
-    Share2 -- "完了/キャンセル" --> Detail2
+    SC003 -- "ホームボタン" --> SC002
 ```
 
-### 検索フロー
+### エラー処理フロー
 
 ```mermaid
-flowchart TD
-    Search[検索画面] --> SearchResults[検索結果画面]
-    Search --> Filter[検索フィルター画面]
+graph TD
+    SC002(ホーム画面) -- "読み込みエラー" --> ReloadPrompt[再読み込みダイアログ]
+    ReloadPrompt -- "再試行" --> SC002
+    ReloadPrompt -- "設定" --> SC003(設定画面)
     
-    Filter -- "フィルター適用" --> Search
-    Filter -- "キャンセル" --> Search
-    
-    SearchResults -- "結果選択" --> Detail1[詳細画面A]
-    SearchResults -- "結果選択" --> Detail2[詳細画面B]
-    SearchResults -- "結果選択" --> Detail3[詳細画面C]
-    
-    SearchResults -- "戻る" --> Search
-    Detail1 -- "戻る" --> SearchResults
-    Detail2 -- "戻る" --> SearchResults
-    Detail3 -- "戻る" --> SearchResults
-```
-
-### タブ切り替えフロー
-
-```mermaid
-flowchart LR
-    subgraph ホームタブ
-        Tab1[タブ1]
-        Tab2[タブ2]
-        Tab3[タブ3]
-        Tab4[タブ4]
-    end
-    
-    Tab1 -- "タブ切替" --> Tab2
-    Tab2 -- "タブ切替" --> Tab3
-    Tab3 -- "タブ切替" --> Tab4
-    Tab4 -- "タブ切替" --> Tab1
-    
-    Tab1 -- "項目選択" --> Detail1[詳細画面A]
-    Tab2 -- "項目選択" --> Detail2[詳細画面B]
-    Tab3 -- "項目選択" --> Detail3[詳細画面C]
-    Tab4 -- "項目選択" --> Settings[設定画面]
+    SC002 -- "サーバー接続エラー" --> ConnError[接続エラーダイアログ]
+    ConnError -- "再試行" --> SC002
+    ConnError -- "オフラインモード" --> OfflineMode[オフラインモード]
+    OfflineMode -- "再接続" --> SC002
 ```
 
 ## 備考
 
-- 詳細画面からの「戻る」操作は、直前の画面に戻ります（ホーム画面または検索結果画面など）
-- 各詳細画面ではスワイプによるページ切り替えも可能です
-- タブ状態はアプリ再起動時も保持されます
-- 編集画面では未保存の変更がある場合、「戻る」操作時に確認ダイアログを表示します
+- ホーム画面はアプリの起点となる重要な画面です
+- 設定画面への遷移はスライドインアニメーションを使用します
+- ホーム画面は常にナビゲーションスタックの最下層に位置します
+- バックボタン/スワイプでホーム画面に戻ると、スクロール位置はリセットされます
