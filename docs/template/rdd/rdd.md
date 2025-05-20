@@ -117,7 +117,7 @@
 <!-- 機能要件 -->
 
 [ログイン]: login.md
-[ログアウト]: docs/hoge.md
+[ログアウト]: logout.md
 [Push通知]: push_notification.md
 [メンテナンスモード]: docs/hoge.md
 [強制バージョンアップ]: docs/hoge.md
