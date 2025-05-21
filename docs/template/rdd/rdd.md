@@ -125,4 +125,4 @@
 <!-- 非機能要件 -->
 [ユーザビリティ・アクセシビリティ]: usability.md
 [セキュリティ]: docs/hoge.md
-[システム方式・性能]: docs/hoge.md
+[システム方式・性能]: system.md
