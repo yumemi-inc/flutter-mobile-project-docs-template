@@ -56,6 +56,8 @@
 
 ##### 例
 
+<img width="2344" alt="action" src="https://github.com/user-attachments/assets/37d81e93-155d-47ae-8cda-d7b71c051ba2" />
+
 ```md サンプル
 * **アカウント名/ID**: `qa_tester_bravo`
 * **パスワード**: `SecureT3st!` （※このパスワードはテスト環境でのみ有効です。本番環境や機密性の高いシステムでは絶対に使用しないでください。セキュリティポリシーに従い、実際のパスワードは安全なパスワード管理ソリューションで運用してください。）
@@ -94,11 +96,16 @@
 
 ##### 例
 
+<img width="2447" alt="chat-action-create-table" src="https://github.com/user-attachments/assets/db9302e6-781e-439b-9d79-749e0ce634de" />
+<img width="1181" alt="code-action-create-table" src="https://github.com/user-attachments/assets/931de8e8-f23e-4ed9-9431-e2c4a3e2a659" />
+
 ##### `<random>`: テストアカウント情報のランダム生成
 
 アカウント情報をランダムに作成し、対象の`<account-table-column>`に追加する。
 
 ##### 例
+
+<img width="1157" alt="random" src="https://github.com/user-attachments/assets/26a9fa40-2113-4b02-8832-c4c079b7a864" />
 
 `<account-table-column>`と`</account-table-column>`が前後にあるMarkdown記法の表を選択し、`Quick Edit`を起動する。
 入力欄に`<random>`を入力し、実行することで追加される。
