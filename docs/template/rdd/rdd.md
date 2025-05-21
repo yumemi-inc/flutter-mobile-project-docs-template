@@ -120,7 +120,7 @@
 [ログアウト]: logout.md
 [Push通知]: push_notification.md
 [メンテナンスモード]: docs/hoge.md
-[強制バージョンアップ]: docs/hoge.md
+[強制バージョンアップ]: force_update.md
 
 <!-- 非機能要件 -->
 [ユーザビリティ・アクセシビリティ]: docs/hoge.md
