@@ -19,7 +19,7 @@ docs/template/functional_specification
 </action>
 
 <template-title>
-## [<feature_name>]:
+## [<feature_name>]
 </template-title>
 
 <feature_name>
@@ -27,7 +27,7 @@ docs/template/functional_specification
 </feature_name>
 
 <file_path>
-- <action>で読み取ったファイルの相対パスから"docs/template"を削除してください 
+- <action>で読み取ったファイルの相対パスから"docs/template/"を削除してください 
 </file_path>
 
 <template-body>
