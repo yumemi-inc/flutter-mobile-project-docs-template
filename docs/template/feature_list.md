@@ -42,4 +42,18 @@ docs/template/functional_specification
 
 <!-- <prompt_result> -->
 
+## [機能仕様書作成ガイドライン]
+
+- **概要:** 機能仕様書の作成方法とテンプレートの使用方法を説明する包括的なガイドライン
+- **目的:** 開発チームが一貫性のある高品質な機能仕様書を作成できるようにする
+
+[機能仕様書作成ガイドライン]: functional_specification/README.md
+
+## [ユーザー認証システム]
+
+- **概要:** アプリケーションのセキュアなユーザー認証機能を提供する包括的な認証システム
+- **目的:** ユーザーアカウントの作成、認証、管理を安全かつ効率的に実現する
+
+[ユーザー認証システム]: functional_specification/certification.md
+
 <!-- </prompt_result> -->
