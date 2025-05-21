@@ -29,15 +29,15 @@
 - `<template-title>`: h2のタイトル
 - `<template-body>`: 作成される文章のフォーマットを指定
 
-[機能仕様書一覧]: feature_list.md
+[機能仕様書一覧]: functional_specification_list.md
 
 ### 機能仕様書一覧のメンテナンス方法
 
 ![3_4_5](https://github.com/user-attachments/assets/93c6e535-beb6-402b-a090-279b249ab889)
 
 1. `<prompt_result>`から`</prompt_result>`ないの文章を削除し、1行改行する
-2. `feature_list.md`を選択している状態で新規Chatを開く
-3. `feature_list.md`が`Added`されていることを確認する
+2. `functional_specification_list.md`を選択している状態で新規Chatを開く
+3. `functional_specification_list.md`が`Added`されていることを確認する
 4. `Agent`モードであることを確認する
 5. `model`が`calude-3.5-sonnet`であることを確認する
 6. 入力欄に`<action>`を入力し、実行する
