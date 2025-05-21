@@ -3,6 +3,16 @@
 本ディレクトリはドキュメントのテンプレートである。
 ドキュメントは`Cursor`で編集する前提で作成されており、生成AIを活用したドキュメント作成を前提としたテンプレートとなっている。
 
+- [テンプレート一覧](#テンプレート一覧)
+  - [テストアカウント一覧](#テストアカウント一覧)
+    - [コメントプロンプト](#コメントプロンプト)
+      - [`<action>`: 箇条書きの内容をテストアカウントに追加](#action-箇条書きの内容をテストアカウントに追加)
+        - [`<action>`実行例](#action実行例)
+      - [`<action-create-table>`: テストアカウント一覧テーブルの作成](#action-create-table-テストアカウント一覧テーブルの作成)
+        - [`<action-create-table>`実行例](#action-create-table実行例)
+      - [`<random>`: テストアカウント情報のランダム生成](#random-テストアカウント情報のランダム生成)
+        - [`<random>`実行例](#random実行例)
+
 ## [テストアカウント一覧]
 
 テストアカウントの管理を目的としたドキュメントで、以下の特徴があります：
@@ -48,15 +58,13 @@
 
 このテンプレートを使用することで、テストアカウントの作成から廃棄までの一貫した管理が可能となります。また、生成AIツールとの連携を考慮した構造となっているため、効率的なドキュメント管理を実現できます。
 
-#### 使用方法
-
-##### `<action>`: 箇条書きの内容をテストアカウントに追加
+#### `<action>`: 箇条書きの内容をテストアカウントに追加
 
 箇条書きで列挙した内容を`<account-table-column>` 囲った表の行として置換追加する。
 
-##### 例
+##### `<action>`実行例
 
-<img width="2344" alt="action" src="https://github.com/user-attachments/assets/37d81e93-155d-47ae-8cda-d7b71c051ba2" />
+![action](https://github.com/user-attachments/assets/37d81e93-155d-47ae-8cda-d7b71c051ba2)
 
 ```md サンプル
 * **アカウント名/ID**: `qa_tester_bravo`
@@ -90,22 +98,22 @@
 4. クリップボードの内容をペースト
 5. `<action>`と入力して整形
 
-##### `<action-create-table>`: テストアカウント一覧テーブルの作成
+#### `<action-create-table>`: テストアカウント一覧テーブルの作成
 
 `<account-table-column>` で定義したMarkdown記法の表を行末に追加する。
 
-##### 例
+##### `<action-create-table>`実行例
 
-<img width="2447" alt="chat-action-create-table" src="https://github.com/user-attachments/assets/db9302e6-781e-439b-9d79-749e0ce634de" />
-<img width="1181" alt="code-action-create-table" src="https://github.com/user-attachments/assets/931de8e8-f23e-4ed9-9431-e2c4a3e2a659" />
+![chat-action-create-table](https://github.com/user-attachments/assets/db9302e6-781e-439b-9d79-749e0ce634de)
+![code-action-create-table](https://github.com/user-attachments/assets/931de8e8-f23e-4ed9-9431-e2c4a3e2a659)
 
-##### `<random>`: テストアカウント情報のランダム生成
+#### `<random>`: テストアカウント情報のランダム生成
 
 アカウント情報をランダムに作成し、対象の`<account-table-column>`に追加する。
 
-##### 例
+##### `<random>`実行例
 
-<img width="1157" alt="random" src="https://github.com/user-attachments/assets/26a9fa40-2113-4b02-8832-c4c079b7a864" />
+![random](https://github.com/user-attachments/assets/26a9fa40-2113-4b02-8832-c4c079b7a864)
 
 `<account-table-column>`と`</account-table-column>`が前後にあるMarkdown記法の表を選択し、`Quick Edit`を起動する。
 入力欄に`<random>`を入力し、実行することで追加される。
