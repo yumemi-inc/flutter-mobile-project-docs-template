@@ -39,7 +39,7 @@
 2. `functional_specification_list.md`を選択している状態で新規Chatを開く
 3. `functional_specification_list.md`が`Added`されていることを確認する
 4. `Agent`モードであることを確認する
-5. `model`が`calude-3.5-sonnet`であることを確認する
+5. `model`が`claude-3.5-sonnet`であることを確認する
 6. 入力欄に`<action>`を入力し、実行する
 7. 生成AIの成果物を確認し、問題がなければ`Approve`する。
 8. `7`で問題がある場合、`model`を適時変更し6から再度実行する
