@@ -16,7 +16,9 @@
 <!--
 このセクションには、アプリが順守すべき法令・ガイドライン、セキュリティ診断方針、アカウント運用管理の要件を記載します。
 - 法令・ガイドライン: 個人情報保護法、GDPR、業界ガイドライン（例: OWASP Mobile Top 10）等、順守対象を明記。
-- ストア（App Store/Google Play）ガイドラインも含める。
+- 必要な場合はストア（App Store/Google Play）ガイドラインも含める。
+  - [App Store Review Guidelines](https://developer.apple.com/jp/app-store/review/guidelines/)
+  - [Google Play Developer Program Policy](https://transparency.google/intl/ja/our-policies/product-terms/google-play/)
 - セキュリティ診断: リリース前の脆弱性診断、定期診断、診断範囲・ツール・実施主体（例: 外部ベンダー）等を記載。
 - アカウント運用管理: アカウント登録・削除・権限管理・パスワードポリシー・多要素認証等の運用方針を明記。
 - サーバーサイドとアプリ側の責任分界点も明確に記載してください。
