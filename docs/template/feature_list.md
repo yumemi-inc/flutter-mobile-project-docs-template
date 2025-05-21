@@ -18,10 +18,6 @@ docs/template/functional_specification
 3. 作成した文章を文末に<prompt_result>と</prompt_result>の範囲に追記してください
 </action>
 
-<template-title>
-## [<feature_name>]
-</template-title>
-
 <feature_name>
 ファイルのメタデータを要約した機能名を日本語で作成してください
 </feature_name>
@@ -29,6 +25,10 @@ docs/template/functional_specification
 <file_path>
 - <action>で読み取ったファイルの相対パスから"docs/template/"を削除してください 
 </file_path>
+
+<template-title>
+## [<feature_name>]
+</template-title>
 
 <template-body>
 - **概要:** [機能が提供する価値や目的を1〜2文で記述]
@@ -42,18 +42,18 @@ docs/template/functional_specification
 
 <!-- <prompt_result> -->
 
-## [機能仕様書作成ガイドライン]
+## [機能仕様書テンプレート管理機能]
 
-- **概要:** 機能仕様書の作成方法とテンプレートの使用方法を説明する包括的なガイドライン
-- **目的:** 開発チームが一貫性のある高品質な機能仕様書を作成できるようにする
+- **概要:** 機能仕様書作成のための標準化されたテンプレートとガイドラインを提供する
+- **目的:** 一貫性のある高品質な機能仕様書の作成をサポートし、開発プロセスの効率化を実現する
 
-[機能仕様書作成ガイドライン]: functional_specification/README.md
+[機能仕様書テンプレート管理機能]: functional_specification/README.md
 
-## [ユーザー認証システム]
+## [ユーザー認証システム仕様]
 
-- **概要:** アプリケーションのセキュアなユーザー認証機能を提供する包括的な認証システム
-- **目的:** ユーザーアカウントの作成、認証、管理を安全かつ効率的に実現する
+- **概要:** セキュアなユーザー認証システムの実装仕様を提供し、アカウント管理から認証までの一連の機能を定義する
+- **目的:** アプリケーションのセキュリティを確保しつつ、ユーザーフレンドリーな認証体験を実現する
 
-[ユーザー認証システム]: functional_specification/certification.md
+[ユーザー認証システム仕様]: functional_specification/certification.md
 
 <!-- </prompt_result> -->
