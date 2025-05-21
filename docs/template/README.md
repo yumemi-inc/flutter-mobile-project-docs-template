@@ -33,7 +33,7 @@
 
 ### 機能仕様書一覧のメンテナンス方法
 
-![3_4_5](https://github.com/user-attachments/assets/93c6e535-beb6-402b-a090-279b249ab889)
+![3_4_5](https://github.com/user-attachments/assets/b68c947e-eb74-497e-9a2e-0dfd8c479196)
 
 1. `<prompt_result>`から`</prompt_result>`ないの文章を削除し、1行改行する
 2. `functional_specification_list.md`を選択している状態で新規Chatを開く
