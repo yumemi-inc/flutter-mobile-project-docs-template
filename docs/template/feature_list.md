@@ -38,6 +38,8 @@ docs/template/functional_specification
 </template-body>
  -->
 
+# 機能仕様書一覧
+
 <!-- <prompt_result> -->
 
 <!-- </prompt_result> -->
