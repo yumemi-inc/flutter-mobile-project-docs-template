@@ -113,10 +113,10 @@
 
 ##### `<random>`実行例
 
-![random](https://github.com/user-attachments/assets/26a9fa40-2113-4b02-8832-c4c079b7a864)
+![random](https://github.com/user-attachments/assets/d0a1e360-c72b-46d0-8fd1-e086ca8f6c31)
 
 1. 変更対象の`<account-table-column>`から`</account-table-column>`を選択する
-2. Quick Edit`を起動する
+2. `Quick Edit`を起動する
 3. `@test_account.md <random>`を入力欄にペーストし、実行する
 4. 生成AIの生成結果を評価し、問題なければ`Approve`する
 
