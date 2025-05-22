@@ -115,8 +115,10 @@
 
 ![random](https://github.com/user-attachments/assets/26a9fa40-2113-4b02-8832-c4c079b7a864)
 
-`<account-table-column>`と`</account-table-column>`が前後にあるMarkdown記法の表を選択し、`Quick Edit`を起動する。
-入力欄に`<random>`を入力し、実行することで追加される。
+1. 変更対象の`<account-table-column>`から`</account-table-column>`を選択する
+2. Quick Edit`を起動する
+3. `@test_account.md <random>`を入力欄にペーストし、実行する
+4. 生成AIの生成結果を評価し、問題なければ`Approve`する
 
 <!-- ドキュメント一覧 -->
 
