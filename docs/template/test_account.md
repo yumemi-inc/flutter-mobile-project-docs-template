@@ -15,6 +15,7 @@
 <random>
 - <account-table-column><example>は変更してはいけません
 - テスト用のアカウント情報を適当に作成し、<action>を実行する
+- 追記のみ実施し、既存の文字に対して削除や編集は実施してはいけません
 </random>
 
 <account-table-column>
