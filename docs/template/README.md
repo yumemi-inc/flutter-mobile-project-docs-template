@@ -150,8 +150,6 @@
 - `<template-title>`: h2のタイトル
 - `<template-body>`: 作成される文章のフォーマットを指定
 
-[機能仕様書一覧]: functional_specification_list.md
-
 ### 機能仕様書一覧のメンテナンス方法
 
 ![3_4_5](https://github.com/user-attachments/assets/b68c947e-eb74-497e-9a2e-0dfd8c479196)
@@ -168,3 +166,4 @@
 <!-- ドキュメント一覧 -->
 
 [テストアカウント一覧]: test_account.md
+[機能仕様書一覧]: functional_specification_list.md
