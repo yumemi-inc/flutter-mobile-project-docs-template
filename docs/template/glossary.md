@@ -96,3 +96,13 @@
 | 未読 |  Unread          |   |
 | すべて既読にする |  Mark all as read       |   |
 | 詳細を見る |  View details           |   |
+
+### コメントプロンプト
+
+「`コメントプロンプト`」とは、生成AIが特定の定型処理を実行できるように、**XMLタグ形式**で指示内容を定義した造語です。  
+ファイル内で`コメントアウト`として記述され、特定の処理や情報を`XML`タグで定義し、生成AIがプロジェクト独自の定義情報を解析して定型処理を実行できるようにするためのプロンプトです。
+
+参考文献: [Use XML tags to structure your prompts]
+
+<!-- URLs -->
+[Use XML tags to structure your prompts]: https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags
