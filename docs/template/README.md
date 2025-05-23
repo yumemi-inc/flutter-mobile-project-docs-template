@@ -156,7 +156,7 @@
 
 ![3_4_5](https://github.com/user-attachments/assets/b68c947e-eb74-497e-9a2e-0dfd8c479196)
 
-1. `<prompt_result>`から`</prompt_result>`ないの文章を削除し、1行改行する
+1. `<prompt_result>`から`</prompt_result>`内の文章を削除し、1行改行する
 2. `functional_specification_list.md`を選択している状態で新規Chatを開く
 3. `functional_specification_list.md`が`Added`されていることを確認する
 4. `Agent`モードであることを確認する
