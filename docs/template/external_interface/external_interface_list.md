@@ -25,14 +25,14 @@
 
 | 連携名称 | 外部システム | 目的・概要 | インターフェース種別 | 備考 |
 |-|-|-|-|-|
-| [Google認証] | Google OAuth | ユーザーログイン | REST API | |
+| Google認証 | Google OAuth | ユーザーログイン | REST API | |
 | Appleサインイン | Apple ID | Appleアカウントによるログイン | REST API | |
 
 ## メッセージング系
 
 | 連携名称 | 外部システム | 目的・概要 | インターフェース種別 | 備考 |
 |-|-|-|-|-|
-| プッシュ通知 | FCM | プッシュ通知送信 | REST API | |
+| プッシュ通知 | [FCM] | プッシュ通知送信 | REST API | |
 | メール送信 | SendGrid | システムからのメール送信 | REST API | |
 | SMS送信 | Twilio | 認証コード等のSMS送信 | REST API | |
 
@@ -67,4 +67,4 @@
 
 <!-- 認証型 -->
 
-[Google認証]: hege.md
+[FCM]: fcm.md
