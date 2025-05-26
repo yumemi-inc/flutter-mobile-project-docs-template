@@ -65,10 +65,10 @@
 -->
 ## 参考ドキュメント
 
-- [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging)
-- [FCM Flutter Integration](https://firebase.google.com/docs/cloud-messaging/flutter/client)
-- [FCM Admin SDK](https://firebase.google.com/docs/cloud-messaging/server)
-- [Flutter firebase_messaging package](https://pub.dev/packages/firebase_messaging)
+- [Firebase Cloud Messaging]
+- [FCM Flutter Integration]
+- [FCM Admin SDK]
+- [Flutter firebase_messaging package]
 
 ## 通知フロー
 
@@ -170,3 +170,12 @@ sequenceDiagram
 - 本番用Firebase プロジェクトの作成
 - APNs証明書の設定（iOS）
 - ProGuard設定の追加（Android）
+
+<!-- Links -->
+
+<!-- ドキュメント -->
+
+[Firebase Cloud Messaging]: <https://firebase.google.com/docs/cloud-messaging>
+[FCM Flutter Integration]: <https://firebase.google.com/docs/cloud-messaging/flutter/client>
+[FCM Admin SDK]: <https://firebase.google.com/docs/cloud-messaging/server>
+[Flutter firebase_messaging package]: <https://pub.dev/packages/firebase_messaging>
