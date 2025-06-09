@@ -1,125 +1,344 @@
 import 'package:flutter/material.dart';
+import 'models/todo.dart';
+import 'services/todo_service.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const TodoApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class TodoApp extends StatelessWidget {
+  const TodoApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'TODO App',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const TodoHomePage(title: 'TODO App'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+class TodoHomePage extends StatefulWidget {
+  const TodoHomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<TodoHomePage> createState() => _TodoHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _TodoHomePageState extends State<TodoHomePage> {
+  final TodoService _todoService = TodoService();
+  List<Todo> _todos = [];
+  bool _isLoading = true;
 
-  void _incrementCounter() {
+  @override
+  void initState() {
+    super.initState();
+    _loadTodos();
+  }
+
+  Future<void> _loadTodos() async {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _isLoading = true;
     });
+
+    try {
+      final todos = await _todoService.getAllTodos();
+      setState(() {
+        _todos = todos;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('エラーが発生しました: $e')),
+        );
+      }
+    }
+  }
+
+  Future<void> _addTodo() async {
+    final titleController = TextEditingController();
+    final descriptionController = TextEditingController();
+
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('新しいTODOを追加'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: titleController,
+                decoration: const InputDecoration(
+                  labelText: 'タイトル',
+                  hintText: 'TODOのタイトルを入力',
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: descriptionController,
+                decoration: const InputDecoration(
+                  labelText: '説明',
+                  hintText: 'TODOの説明を入力（任意）',
+                ),
+                maxLines: 3,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('キャンセル'),
+            ),
+            TextButton(
+              onPressed: () {
+                if (titleController.text.trim().isNotEmpty) {
+                  Navigator.of(context).pop(true);
+                }
+              },
+              child: const Text('追加'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (result == true && titleController.text.trim().isNotEmpty) {
+      try {
+        await _todoService.addTodo(
+          titleController.text.trim(),
+          descriptionController.text.trim(),
+        );
+        _loadTodos();
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('TODOを追加しました')),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('追加に失敗しました: $e')),
+          );
+        }
+      }
+    }
+  }
+
+  Future<void> _toggleTodoCompletion(Todo todo) async {
+    try {
+      await _todoService.toggleTodoCompletion(todo);
+      _loadTodos();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('更新に失敗しました: $e')),
+        );
+      }
+    }
+  }
+
+  Future<void> _deleteTodo(Todo todo) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('TODOを削除'),
+          content: Text('「${todo.title}」を削除しますか？'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('キャンセル'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('削除'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirmed == true && todo.id != null) {
+      try {
+        await _todoService.deleteTodo(todo.id!);
+        _loadTodos();
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('TODOを削除しました')),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('削除に失敗しました: $e')),
+          );
+        }
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    final pendingTodos = _todos.where((todo) => !todo.isCompleted).toList();
+    final completedTodos = _todos.where((todo) => todo.isCompleted).toList();
+
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _loadTodos,
+          ),
+        ],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              children: [
+                // 統計情報
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            '${_todos.length}',
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                          const Text('合計'),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            '${pendingTodos.length}',
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                          const Text('未完了'),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            '${completedTodos.length}',
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                          const Text('完了'),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                // TODOリスト
+                Expanded(
+                  child: _todos.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'TODOがありません\n「+」ボタンで追加してください',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        )
+                      : ListView(
+                          children: [
+                            if (pendingTodos.isNotEmpty) ...[
+                              const Padding(
+                                padding: EdgeInsets.all(16),
+                                child: Text(
+                                  '未完了のTODO',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              ...pendingTodos
+                                  .map((todo) => _buildTodoItem(todo)),
+                            ],
+                            if (completedTodos.isNotEmpty) ...[
+                              const Padding(
+                                padding: EdgeInsets.all(16),
+                                child: Text(
+                                  '完了済みのTODO',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              ...completedTodos
+                                  .map((todo) => _buildTodoItem(todo)),
+                            ],
+                          ],
+                        ),
+                ),
+              ],
             ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _addTodo,
+        tooltip: 'TODOを追加',
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  Widget _buildTodoItem(Todo todo) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: ListTile(
+        leading: Checkbox(
+          value: todo.isCompleted,
+          onChanged: (_) => _toggleTodoCompletion(todo),
+        ),
+        title: Text(
+          todo.title,
+          style: TextStyle(
+            decoration: todo.isCompleted ? TextDecoration.lineThrough : null,
+            color: todo.isCompleted ? Colors.grey : null,
+          ),
+        ),
+        subtitle: todo.description.isNotEmpty
+            ? Text(
+                todo.description,
+                style: TextStyle(
+                  color: todo.isCompleted ? Colors.grey : null,
+                ),
+              )
+            : null,
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              '${todo.createdAt.month}/${todo.createdAt.day}',
+              style: TextStyle(
+                fontSize: 12,
+                color: todo.isCompleted ? Colors.grey : Colors.grey[600],
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete_outline),
+              onPressed: () => _deleteTodo(todo),
+              color: Colors.red,
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
