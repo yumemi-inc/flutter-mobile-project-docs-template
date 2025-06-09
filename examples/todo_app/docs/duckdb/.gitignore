@@ -1,0 +1,5 @@
+# DuckDB データベースファイル
+# DuckDBがサポートする主要な拡張子を除外
+*.duckdb
+*.db
+*.ddb
