@@ -5,7 +5,7 @@ import '../../domain/entities/category.dart';
 
 class DatabaseHelper {
   static const String _dbName = 'todo_app.db';
-  static const int _dbVersion = 2;
+  static const int _dbVersion = 3;
   static Database? _database;
 
   static Future<Database> get database async {
@@ -36,6 +36,7 @@ class DatabaseHelper {
         due_date DATETIME,
         is_completed INTEGER NOT NULL DEFAULT 0,
         completed_at DATETIME,
+        reminder_date_time DATETIME,
         created_at DATETIME NOT NULL,
         updated_at DATETIME NOT NULL
       )
@@ -59,6 +60,8 @@ class DatabaseHelper {
     await db.execute('CREATE INDEX idx_tasks_due_date ON tasks (due_date)');
     await db.execute('CREATE INDEX idx_tasks_created_at ON tasks (created_at)');
     await db.execute('CREATE INDEX idx_tasks_category ON tasks (category)');
+    await db.execute(
+        'CREATE INDEX idx_tasks_reminder_date_time ON tasks (reminder_date_time)');
 
     // デフォルトカテゴリの挿入
     await _insertDefaultCategories(db);
@@ -74,6 +77,12 @@ class DatabaseHelper {
       await db.execute('DROP TABLE IF EXISTS tasks');
       await db.execute('DROP TABLE IF EXISTS categories');
       await _onCreate(db, newVersion);
+    } else if (oldVersion < 3) {
+      // バージョン2から3へのマイグレーション：reminder_date_timeカラムを追加
+      await db
+          .execute('ALTER TABLE tasks ADD COLUMN reminder_date_time DATETIME');
+      await db.execute(
+          'CREATE INDEX idx_tasks_reminder_date_time ON tasks (reminder_date_time)');
     }
   }
 
@@ -98,6 +107,7 @@ class DatabaseHelper {
         'due_date': '2024-01-15T17:00:00.000',
         'is_completed': 0,
         'completed_at': null,
+        'reminder_date_time': '2024-01-14T09:00:00.000',
         'created_at': '2025-06-10T09:41:20.023',
         'updated_at': '2025-06-10T09:41:20.023',
       },
@@ -110,6 +120,7 @@ class DatabaseHelper {
         'due_date': '2024-01-10T12:00:00.000',
         'is_completed': 0,
         'completed_at': null,
+        'reminder_date_time': null,
         'created_at': '2025-06-10T09:41:20.023',
         'updated_at': '2025-06-10T09:41:20.023',
       },
@@ -122,6 +133,7 @@ class DatabaseHelper {
         'due_date': '2024-01-08T19:00:00.000',
         'is_completed': 1,
         'completed_at': null,
+        'reminder_date_time': null,
         'created_at': '2025-06-10T09:41:20.023',
         'updated_at': '2025-06-10T09:41:20.023',
       },
@@ -134,6 +146,7 @@ class DatabaseHelper {
         'due_date': null,
         'is_completed': 0,
         'completed_at': null,
+        'reminder_date_time': '2024-01-12T20:00:00.000',
         'created_at': '2025-06-10T09:41:20.023',
         'updated_at': '2025-06-10T09:41:20.023',
       },
@@ -146,6 +159,7 @@ class DatabaseHelper {
         'due_date': null,
         'is_completed': 0,
         'completed_at': null,
+        'reminder_date_time': null,
         'created_at': '2025-06-10T09:41:20.023',
         'updated_at': '2025-06-10T09:41:20.023',
       },

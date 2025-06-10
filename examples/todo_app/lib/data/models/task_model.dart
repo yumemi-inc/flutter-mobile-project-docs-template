@@ -9,6 +9,7 @@ class TaskModel {
   final DateTime? dueDate;
   final int isCompleted;
   final DateTime? completedAt;
+  final DateTime? reminderDateTime;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -21,6 +22,7 @@ class TaskModel {
     this.dueDate,
     required this.isCompleted,
     this.completedAt,
+    this.reminderDateTime,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -39,6 +41,9 @@ class TaskModel {
       completedAt: map['completed_at'] != null
           ? DateTime.parse(map['completed_at'] as String)
           : null,
+      reminderDateTime: map['reminder_date_time'] != null
+          ? DateTime.parse(map['reminder_date_time'] as String)
+          : null,
       createdAt: DateTime.parse(map['created_at'] as String),
       updatedAt: DateTime.parse(map['updated_at'] as String),
     );
@@ -54,6 +59,7 @@ class TaskModel {
       'due_date': dueDate?.toIso8601String(),
       'is_completed': isCompleted,
       'completed_at': completedAt?.toIso8601String(),
+      'reminder_date_time': reminderDateTime?.toIso8601String(),
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
     };
@@ -72,6 +78,7 @@ class TaskModel {
       dueDate: dueDate,
       isCompleted: isCompleted == 1,
       completedAt: completedAt,
+      reminderDateTime: reminderDateTime,
       createdAt: createdAt,
       updatedAt: updatedAt,
     );
@@ -87,6 +94,7 @@ class TaskModel {
       dueDate: task.dueDate,
       isCompleted: task.isCompleted ? 1 : 0,
       completedAt: task.completedAt,
+      reminderDateTime: task.reminderDateTime,
       createdAt: task.createdAt,
       updatedAt: task.updatedAt,
     );

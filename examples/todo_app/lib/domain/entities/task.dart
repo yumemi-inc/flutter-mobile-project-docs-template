@@ -19,6 +19,7 @@ class Task extends Equatable {
   final DateTime? dueDate;
   final bool isCompleted;
   final DateTime? completedAt;
+  final DateTime? reminderDateTime;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -31,6 +32,7 @@ class Task extends Equatable {
     this.dueDate,
     required this.isCompleted,
     this.completedAt,
+    this.reminderDateTime,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -43,6 +45,7 @@ class Task extends Equatable {
     DateTime? dueDate,
     bool? isCompleted,
     DateTime? completedAt,
+    DateTime? reminderDateTime,
     DateTime? updatedAt,
   }) {
     return Task(
@@ -54,6 +57,7 @@ class Task extends Equatable {
       dueDate: dueDate ?? this.dueDate,
       isCompleted: isCompleted ?? this.isCompleted,
       completedAt: completedAt ?? this.completedAt,
+      reminderDateTime: reminderDateTime ?? this.reminderDateTime,
       createdAt: createdAt,
       updatedAt: updatedAt ?? DateTime.now(),
     );
@@ -69,6 +73,7 @@ class Task extends Equatable {
         dueDate,
         isCompleted,
         completedAt,
+        reminderDateTime,
         createdAt,
         updatedAt,
       ];
