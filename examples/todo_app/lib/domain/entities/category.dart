@@ -6,6 +6,7 @@ class Category extends Equatable {
   final String name;
   final Color color;
   final IconData? icon;
+  final bool isPreset;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -14,6 +15,7 @@ class Category extends Equatable {
     required this.name,
     required this.color,
     this.icon,
+    required this.isPreset,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -22,6 +24,7 @@ class Category extends Equatable {
     String? name,
     Color? color,
     IconData? icon,
+    bool? isPreset,
     DateTime? updatedAt,
   }) {
     return Category(
@@ -29,6 +32,7 @@ class Category extends Equatable {
       name: name ?? this.name,
       color: color ?? this.color,
       icon: icon ?? this.icon,
+      isPreset: isPreset ?? this.isPreset,
       createdAt: createdAt,
       updatedAt: updatedAt ?? DateTime.now(),
     );
@@ -40,6 +44,7 @@ class Category extends Equatable {
         name,
         color,
         icon,
+        isPreset,
         createdAt,
         updatedAt,
       ];
@@ -55,6 +60,7 @@ class CategoryFactory {
         name: '仕事',
         color: Colors.blue,
         icon: Icons.work,
+        isPreset: true,
         createdAt: now,
         updatedAt: now,
       ),
@@ -63,6 +69,7 @@ class CategoryFactory {
         name: '個人',
         color: Colors.green,
         icon: Icons.person,
+        isPreset: true,
         createdAt: now,
         updatedAt: now,
       ),
@@ -71,6 +78,7 @@ class CategoryFactory {
         name: '買い物',
         color: Colors.orange,
         icon: Icons.shopping_cart,
+        isPreset: true,
         createdAt: now,
         updatedAt: now,
       ),
@@ -79,6 +87,7 @@ class CategoryFactory {
         name: '健康',
         color: Colors.red,
         icon: Icons.favorite,
+        isPreset: true,
         createdAt: now,
         updatedAt: now,
       ),

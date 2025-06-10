@@ -72,7 +72,7 @@ final filteredTasksProvider = FutureProvider<List<Task>>((ref) async {
 
   final useCase = ref.read(getTasksByFilterUseCaseProvider);
   return await useCase(
-    categoryId: filter.categoryId,
+    category: filter.category,
     priority: filter.priority,
     isCompleted: filter.isCompleted,
   );
@@ -85,23 +85,23 @@ final taskStatisticsProvider = FutureProvider<Map<String, int>>((ref) async {
 });
 
 class TaskFilter {
-  final String? categoryId;
+  final String? category;
   final TaskPriority? priority;
   final bool? isCompleted;
 
   TaskFilter({
-    this.categoryId,
+    this.category,
     this.priority,
     this.isCompleted,
   });
 
   TaskFilter copyWith({
-    String? categoryId,
+    String? category,
     TaskPriority? priority,
     bool? isCompleted,
   }) {
     return TaskFilter(
-      categoryId: categoryId ?? this.categoryId,
+      category: category ?? this.category,
       priority: priority ?? this.priority,
       isCompleted: isCompleted ?? this.isCompleted,
     );

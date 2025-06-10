@@ -80,14 +80,14 @@ class GetTasksByFilterUseCase {
   GetTasksByFilterUseCase(this.repository);
 
   Future<List<Task>> call({
-    String? categoryId,
+    String? category,
     TaskPriority? priority,
     bool? isCompleted,
   }) async {
     List<Task> tasks = await repository.getAllTasks();
 
-    if (categoryId != null) {
-      tasks = tasks.where((task) => task.categoryId == categoryId).toList();
+    if (category != null) {
+      tasks = tasks.where((task) => task.category == category).toList();
     }
 
     if (priority != null) {

@@ -168,10 +168,10 @@ class _TaskFormPageState extends ConsumerState<TaskFormPage> {
                       data: (categories) {
                         // 初回読み込み時にカテゴリを設定
                         if (widget.task != null &&
-                            widget.task!.categoryId != null &&
+                            widget.task!.category.isNotEmpty &&
                             _selectedCategory == null) {
                           _selectedCategory = categories
-                              .where((c) => c.id == widget.task!.categoryId)
+                              .where((c) => c.name == widget.task!.category)
                               .firstOrNull;
                         }
 
@@ -305,7 +305,7 @@ class _TaskFormPageState extends ConsumerState<TaskFormPage> {
             ? null
             : _descriptionController.text.trim(),
         priority: _selectedPriority,
-        categoryId: _selectedCategory?.id,
+        category: _selectedCategory?.name ?? 'その他',
         dueDate: _selectedDueDate,
         isCompleted: widget.task?.isCompleted ?? false,
         completedAt: widget.task?.completedAt,

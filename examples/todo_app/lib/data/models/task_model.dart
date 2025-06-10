@@ -4,20 +4,20 @@ class TaskModel {
   final String id;
   final String title;
   final String? description;
-  final int priority;
-  final String? categoryId;
-  final int? dueDate;
+  final String priority;
+  final String category;
+  final DateTime? dueDate;
   final int isCompleted;
-  final int? completedAt;
-  final int createdAt;
-  final int updatedAt;
+  final DateTime? completedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   const TaskModel({
     required this.id,
     required this.title,
     this.description,
     required this.priority,
-    this.categoryId,
+    required this.category,
     this.dueDate,
     required this.isCompleted,
     this.completedAt,
@@ -30,13 +30,17 @@ class TaskModel {
       id: map['id'] as String,
       title: map['title'] as String,
       description: map['description'] as String?,
-      priority: map['priority'] as int,
-      categoryId: map['category_id'] as String?,
-      dueDate: map['due_date'] as int?,
+      priority: map['priority'] as String,
+      category: map['category'] as String,
+      dueDate: map['due_date'] != null
+          ? DateTime.parse(map['due_date'] as String)
+          : null,
       isCompleted: map['is_completed'] as int,
-      completedAt: map['completed_at'] as int?,
-      createdAt: map['created_at'] as int,
-      updatedAt: map['updated_at'] as int,
+      completedAt: map['completed_at'] != null
+          ? DateTime.parse(map['completed_at'] as String)
+          : null,
+      createdAt: DateTime.parse(map['created_at'] as String),
+      updatedAt: DateTime.parse(map['updated_at'] as String),
     );
   }
 
@@ -46,12 +50,12 @@ class TaskModel {
       'title': title,
       'description': description,
       'priority': priority,
-      'category_id': categoryId,
-      'due_date': dueDate,
+      'category': category,
+      'due_date': dueDate?.toIso8601String(),
       'is_completed': isCompleted,
-      'completed_at': completedAt,
-      'created_at': createdAt,
-      'updated_at': updatedAt,
+      'completed_at': completedAt?.toIso8601String(),
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
     };
   }
 
@@ -60,17 +64,16 @@ class TaskModel {
       id: id,
       title: title,
       description: description,
-      priority: TaskPriority.values.firstWhere((p) => p.value == priority),
-      categoryId: categoryId,
-      dueDate: dueDate != null
-          ? DateTime.fromMillisecondsSinceEpoch(dueDate!)
-          : null,
+      priority: TaskPriority.values.firstWhere(
+        (p) => p.label == priority,
+        orElse: () => TaskPriority.medium,
+      ),
+      category: category,
+      dueDate: dueDate,
       isCompleted: isCompleted == 1,
-      completedAt: completedAt != null
-          ? DateTime.fromMillisecondsSinceEpoch(completedAt!)
-          : null,
-      createdAt: DateTime.fromMillisecondsSinceEpoch(createdAt),
-      updatedAt: DateTime.fromMillisecondsSinceEpoch(updatedAt),
+      completedAt: completedAt,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 
@@ -79,13 +82,13 @@ class TaskModel {
       id: task.id,
       title: task.title,
       description: task.description,
-      priority: task.priority.value,
-      categoryId: task.categoryId,
-      dueDate: task.dueDate?.millisecondsSinceEpoch,
+      priority: task.priority.label,
+      category: task.category,
+      dueDate: task.dueDate,
       isCompleted: task.isCompleted ? 1 : 0,
-      completedAt: task.completedAt?.millisecondsSinceEpoch,
-      createdAt: task.createdAt.millisecondsSinceEpoch,
-      updatedAt: task.updatedAt.millisecondsSinceEpoch,
+      completedAt: task.completedAt,
+      createdAt: task.createdAt,
+      updatedAt: task.updatedAt,
     );
   }
 }

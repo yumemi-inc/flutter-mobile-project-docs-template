@@ -63,18 +63,19 @@ class TaskListItem extends ConsumerWidget {
                 children: [
                   _buildPriorityChip(),
                   const SizedBox(width: 8),
-                  if (task.categoryId != null)
+                  if (task.category.isNotEmpty && task.category != 'その他')
                     categoriesAsync.when(
                       data: (categories) {
                         final category = categories
-                            .where((c) => c.id == task.categoryId)
+                            .where((c) => c.name == task.category)
                             .firstOrNull;
                         return category != null
                             ? _buildCategoryChip(category.name, category.color)
-                            : const SizedBox.shrink();
+                            : _buildCategoryChip(task.category, Colors.grey);
                       },
                       loading: () => const SizedBox.shrink(),
-                      error: (_, __) => const SizedBox.shrink(),
+                      error: (_, __) =>
+                          _buildCategoryChip(task.category, Colors.grey),
                     ),
                   const Spacer(),
                   if (task.dueDate != null) _buildDueDateText(),

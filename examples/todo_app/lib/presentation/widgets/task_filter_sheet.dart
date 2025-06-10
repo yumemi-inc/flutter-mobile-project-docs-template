@@ -119,11 +119,11 @@ class TaskFilterSheet extends ConsumerWidget {
               children: [
                 FilterChip(
                   label: const Text('すべて'),
-                  selected: filter.categoryId == null,
+                  selected: filter.category == null,
                   onSelected: (selected) {
                     if (selected) {
                       ref.read(taskFilterProvider.notifier).state =
-                          filter.copyWith(categoryId: null);
+                          filter.copyWith(category: null);
                     }
                   },
                 ),
@@ -138,11 +138,11 @@ class TaskFilterSheet extends ConsumerWidget {
                           Text(category.name),
                         ],
                       ),
-                      selected: filter.categoryId == category.id,
+                      selected: filter.category == category.name,
                       onSelected: (selected) {
                         ref.read(taskFilterProvider.notifier).state =
                             filter.copyWith(
-                                categoryId: selected ? category.id : null);
+                                category: selected ? category.name : null);
                       },
                     )),
               ],

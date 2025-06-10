@@ -15,7 +15,7 @@ class Task extends Equatable {
   final String title;
   final String? description;
   final TaskPriority priority;
-  final String? categoryId;
+  final String category;
   final DateTime? dueDate;
   final bool isCompleted;
   final DateTime? completedAt;
@@ -27,7 +27,7 @@ class Task extends Equatable {
     required this.title,
     this.description,
     required this.priority,
-    this.categoryId,
+    required this.category,
     this.dueDate,
     required this.isCompleted,
     this.completedAt,
@@ -39,7 +39,7 @@ class Task extends Equatable {
     String? title,
     String? description,
     TaskPriority? priority,
-    String? categoryId,
+    String? category,
     DateTime? dueDate,
     bool? isCompleted,
     DateTime? completedAt,
@@ -50,7 +50,7 @@ class Task extends Equatable {
       title: title ?? this.title,
       description: description ?? this.description,
       priority: priority ?? this.priority,
-      categoryId: categoryId ?? this.categoryId,
+      category: category ?? this.category,
       dueDate: dueDate ?? this.dueDate,
       isCompleted: isCompleted ?? this.isCompleted,
       completedAt: completedAt ?? this.completedAt,
@@ -65,7 +65,7 @@ class Task extends Equatable {
         title,
         description,
         priority,
-        categoryId,
+        category,
         dueDate,
         isCompleted,
         completedAt,

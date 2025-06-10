@@ -71,12 +71,12 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<List<Task>> getTasksByCategory(String categoryId) async {
+  Future<List<Task>> getTasksByCategory(String category) async {
     final db = await DatabaseHelper.database;
     final List<Map<String, dynamic>> maps = await db.query(
       'tasks',
-      where: 'category_id = ?',
-      whereArgs: [categoryId],
+      where: 'category = ?',
+      whereArgs: [category],
       orderBy: 'is_completed ASC, created_at DESC',
     );
 
@@ -91,7 +91,7 @@ class TaskRepositoryImpl implements TaskRepository {
     final List<Map<String, dynamic>> maps = await db.query(
       'tasks',
       where: 'priority = ?',
-      whereArgs: [priority.value],
+      whereArgs: [priority.label],
       orderBy: 'is_completed ASC, created_at DESC',
     );
 
@@ -136,7 +136,7 @@ class TaskRepositoryImpl implements TaskRepository {
     final List<Map<String, dynamic>> maps = await db.query(
       'tasks',
       where: 'due_date BETWEEN ? AND ?',
-      whereArgs: [start.millisecondsSinceEpoch, end.millisecondsSinceEpoch],
+      whereArgs: [start.toIso8601String(), end.toIso8601String()],
       orderBy: 'due_date ASC',
     );
 

@@ -2,7 +2,7 @@ import '../entities/task.dart';
 
 abstract class TaskRepository {
   Future<List<Task>> getAllTasks();
-  Future<List<Task>> getTasksByCategory(String categoryId);
+  Future<List<Task>> getTasksByCategory(String category);
   Future<List<Task>> getTasksByPriority(TaskPriority priority);
   Future<List<Task>> getTasksByStatus(bool isCompleted);
   Future<List<Task>> searchTasks(String query);

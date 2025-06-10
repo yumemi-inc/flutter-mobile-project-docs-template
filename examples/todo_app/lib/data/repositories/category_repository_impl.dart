@@ -64,11 +64,11 @@ class CategoryRepositoryImpl implements CategoryRepository {
   Future<void> deleteCategory(String id) async {
     final db = await DatabaseHelper.database;
 
-    // 関連するタスクのカテゴリIDをnullに設定
+    // 関連するタスクのカテゴリをデフォルトに設定
     await db.update(
       'tasks',
-      {'category_id': null},
-      where: 'category_id = ?',
+      {'category': 'その他'},
+      where: 'category = ?',
       whereArgs: [id],
     );
 
